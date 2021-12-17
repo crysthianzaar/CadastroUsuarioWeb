@@ -6,4 +6,4 @@ api = Api(bp)
 
 # Factory
 def init_app(app):
-    app.registerBlueprint(bp)
+    app.register_blueprint(bp)
