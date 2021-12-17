@@ -3,6 +3,7 @@ instance/
 .webassets-cache
 
 # Environments
+eb-virt
 .env
 .venv
 env/
@@ -10,3 +11,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Cache Python
+__pycache__
+
+# IDE
+.vscode
+
+
+
