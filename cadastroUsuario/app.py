@@ -1,15 +1,10 @@
 from flask import Flask
-from cadastroUsuario.extensions import configuration
-
+from cadastroUsuario.extensions import configuration, database, commands
 from cadastroUsuario.blueprints import restapi
 
 def create_app():
     app = Flask(__name__)
     configuration.init_app(app)
-    restapi.init_app(app)
-
-    @app.route("/")
-    def hello_world():
-        return "<p>Hello, World!</p>"
-        
+    database.init_app(app)
+    commands.init_app(app)
     return app
