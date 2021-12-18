@@ -5,6 +5,9 @@ instance/
 # Environments
 eb-virt
 
+# Database
+.db
+
 
 # Cache Python
 __pycache__
