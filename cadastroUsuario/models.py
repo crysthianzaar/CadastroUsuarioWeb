@@ -19,7 +19,7 @@ class EnderecoUsuario(db.Model, SerializerMixin):
     cep = db.Column(db.String(10), nullable=False)
     rua = db.Column(db.String(80), nullable=False)
     numero = db.Column(db.String(15))
-    complemento = rua = db.Column(db.String(80))
+    complemento = db.Column(db.String(80))
     
     
 

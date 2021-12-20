@@ -7,6 +7,7 @@ eb-virt
 
 # Database
 .db
+.sqlite
 
 
 # Cache Python

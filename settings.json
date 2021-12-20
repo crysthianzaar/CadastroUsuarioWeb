@@ -1,12 +1,14 @@
 {
     "production": {
-      "DEBUG": true,
+      "DEBUG": false,
       "SQLALCHEMY_DATABASE_URI": "sqlite:///production.db",
-      "SQLALCHEMY_TRACK_MODIFICATIONS": false
+      "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+      "SECRET_KEY": "***"
     },
     "development": {
       "DEBUG": true,
       "SQLALCHEMY_DATABASE_URI": "sqlite:///development.db",
-      "SQLALCHEMY_TRACK_MODIFICATIONS": false
+      "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+      "SECRET_KEY": "secret"
     }
   }
