@@ -8,6 +8,7 @@ eb-virt
 # Database
 .db
 .sqlite
+migrations
 
 
 # Cache Python

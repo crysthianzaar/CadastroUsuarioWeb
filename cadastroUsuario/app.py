@@ -10,5 +10,3 @@ def create_app():
     session_management.init_app(app)    # Gerenciamento de Sessão de Usuário
     webui.init_app(app)                 # Templates, Login e Cadastro de Usuário
     return app
-
-

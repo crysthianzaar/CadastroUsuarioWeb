@@ -20,32 +20,29 @@
 
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
-                            <a href="{{ url_for('webui.index') }}" class="navbar-item">
-                                Início
-                            </a>
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('webui.profile') }}" class="navbar-item">
-                                Perfil
-                            </a>
-                            {% endif %}
-                            {% if not current_user.is_authenticated %}
                             <div class="buttons">
-                                <a href="{{ url_for('webui.login') }}" class="button is-light">
-                                    Login
+                                <a href="{{ url_for('webui.index') }}" class="button is-info">
+                                    Início
                                 </a>
-                                <a href="{{ url_for('webui.signup') }}" class="button is-info">
-                                    Sign Up
-                                </a>
+                                {% if current_user.is_authenticated %}
+                                    <a href="{{ url_for('webui.profile') }}" class="button is-warning">
+                                        Perfil / Editar Dados
+                                    </a>
+                                {% endif %}
+                                {% if not current_user.is_authenticated %}
+                                    <a href="{{ url_for('webui.login') }}" class="button is-light">
+                                        Login
+                                    </a>
+                                    <a href="{{ url_for('webui.signup') }}" class="button is-success">
+                                        Sign Up
+                                    </a>
+                                {% endif %}
+                                {% if current_user.is_authenticated %}
+                                    <a href="{{ url_for('webui.logout') }}" class="button is-danger is-light">
+                                        Logout
+                                    </a>
+                                {% endif %}
                             </div>
-                            
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <div class="buttons">
-                                <a href="{{ url_for('webui.logout') }}" class="button is-danger is-light">
-                                    Logout
-                                </a>
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

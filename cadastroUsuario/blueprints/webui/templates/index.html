@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<section class="hero is-small is-success" style="align-items: center;"> 
-  <div class="hero-body">
     <p class="title">
       {% if current_user.is_authenticated %}
       Olá, {{ nome }}!
@@ -13,14 +11,14 @@
       Olá, Visitante!
       {% endif %}
     </p>
-  </div>
-</section>
-<br>
+
+<hr>
 <h1 class="title">
   Desafio PontoTel
 </h1>
 <h2 class="subtitle">
   Cadastro de Usuário WEB
 </h2>
+<img src="https://www.pontotel.com.br/images/logo-pontotel.png">
 
 {% endblock %}

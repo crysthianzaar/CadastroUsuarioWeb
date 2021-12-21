@@ -9,11 +9,14 @@
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="notification is-danger">
-                {{ messages[0] }}. Go to <a href="{{ url_for('webui.login') }}">login page</a>.
+                {{ messages[0] }} Vá para a <a href="{{ url_for('webui.login') }}">página de login</a>.
             </div>
         {% endif %}
         {% endwith %}
         <form method="POST" action="/signup">
+            <h3> Informações Pessoais: </h3>
+            <br>
+            
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
