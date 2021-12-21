@@ -1,9 +1,18 @@
+<!-- templates/signup.html -->
+
 {% extends "base.html" %}
 
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Sign Up</h3>
+    <h3 class="title">Realizar Cadastro</h3>
     <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}. Go to <a href="{{ url_for('webui.login') }}">login page</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
         <form method="POST" action="/signup">
             <div class="field">
                 <div class="control">
@@ -13,17 +22,77 @@
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+                    <input class="input is-large" type="text" name="nome" placeholder="Seu Nome" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                    <input class="input is-large" type="text" name="cpf" placeholder="CPF">
                 </div>
             </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="pis" placeholder="PIS">
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Senha">
+                </div>
+            </div>
+
+            <hr>
+
+            <h3> Endereço: </h3>
+            <br>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Pais" placeholder="País">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Estado" placeholder="Estado">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Municipio" placeholder="Município">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="CEP" placeholder="CEP">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Rua" placeholder="Rua">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Numero" placeholder="Número">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="Complemento" placeholder="Complemento">
+                </div>
+            </div>
+
+
+            <button class="button is-block is-info is-large is-fullwidth">Cadastrar</button>
         </form>
     </div>
 </div>

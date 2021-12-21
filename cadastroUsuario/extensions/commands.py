@@ -9,3 +9,4 @@ def init_app(app):
     @app.cli.command()
     def dropdb():
         db.drop_all()
+
