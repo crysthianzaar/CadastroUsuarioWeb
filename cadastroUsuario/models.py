@@ -1,9 +1,12 @@
+from enum import unique
 from flask_login import UserMixin
 from sqlalchemy.orm import backref, relationship
 from cadastroUsuario.extensions.database import db
 from sqlalchemy_serializer import SerializerMixin
 
 class Usuario(db.Model, SerializerMixin, UserMixin):
+    __tablename__ = 'Usuario'
+    
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -13,8 +16,10 @@ class Usuario(db.Model, SerializerMixin, UserMixin):
     senha = db.Column(db.String(512))
 
 class EnderecoUsuario(db.Model, SerializerMixin, UserMixin):
+    __tablename__ = 'EnderecoUsuario'
+    
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique = True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('Usuario.id'), unique=True)
     pais = db.Column(db.String(80), nullable=False)
     estado = db.Column(db.String(80), nullable=False)
     municipio = db.Column(db.String(80), nullable=False)
