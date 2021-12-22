@@ -1,8 +1,7 @@
-import re
 from ...extensions.database import db
 from cadastroUsuario.models import Usuario, EnderecoUsuario
-from flask import render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, current_user, logout_user
 
 def index():
@@ -16,6 +15,28 @@ def index():
 @login_required
 def profile():
     return render_template('profile.html', nome= current_user.nome)
+
+
+def login():
+    return render_template('login.html')
+
+def login_post():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = Usuario.query.filter_by(email=email).first()
+    print(user.senha)
+    print("Senha: " + password)
+    # verifica se o usuário realmente existe
+    # Pega a senha fornecida pelo usuário, gera o hash e compara com a senha em hash do banco de dados
+    if not user or not check_password_hash(user.senha, password):
+        flash('Que pena! Parece que algo deu errado. Confirme as suas credenciais de acesso e tente novamente')
+        return redirect(url_for('webui.login')) 
+    
+    login_user(user)
+    # Se a verificação acima for aprovada, sabemos que o usuário tem as credenciais corretas
+    return redirect(url_for('webui.index'))
+
 
 def signup():
     return render_template('signup.html')
@@ -43,36 +64,6 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
     if not password:
         flash('É necessário inserir uma senha! Caso já tenha uma conta')
         return redirect(url_for('webui.signup'))
-    
-    # Validação de Senha com regras de segurança
-    if password:
-        flag = 0
-        while True:   
-            if (len(password)<8): 
-                flag = -1
-                break
-            elif not re.search("[a-z]", password): 
-                flag = -1
-                break
-            elif not re.search("[A-Z]", password): 
-                flag = -1
-                break
-            elif not re.search("[0-9]", password): 
-                flag = -1
-                break
-            elif not re.search("[_@$]", password): 
-                flag = -1
-                break
-            elif re.search("\s", password): 
-                flag = -1
-                break
-            else: 
-                flag = 0
-                break
-        
-        if flag ==-1: 
-            flash('A senha escolhida é muito fraca, para a sua segurança escolha uma melhor :) | Caso já tenha uma conta')
-            return redirect(url_for('webui.signup'))
         
     # Se um usuário for encontrado, queremos redireciona-lo de volta para a página de Cadastro.
     elif user: 
@@ -113,26 +104,6 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
         db.session.commit()
         
     return redirect(url_for('webui.login'))
-
-def login():
-    return render_template('login.html')
-
-def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
-
-    user = Usuario.query.filter_by(email=email).first()
-
-    # verifica se o usuário realmente existe
-    # Pega a senha fornecida pelo usuário, gera o hash e compara com a senha em hash do banco de dados
-    if not user or not check_password_hash(user.senha, password):
-        flash('Que pena! Parece que algo deu errado. Confirme as suas credenciais de acesso e tente novamente')
-        return redirect(url_for('webui.login')) 
-    
-    login_user(user, remember=remember)
-    # Se a verificação acima for aprovada, sabemos que o usuário tem as credenciais corretas
-    return redirect(url_for('webui.index'))
 
 @login_required
 def logout():
