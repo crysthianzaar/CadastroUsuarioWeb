@@ -16,3 +16,7 @@ seguida.
 - - [x] Use variáveis de ambiente
 - - [ ] Use Docker
 - - [ ] Suba a aplicação(back e front) no heroku ou similar.
+
+---
+
+Veja todas as issues e kanban do projeto [Aqui](https://github.com/crysthianzaar/CadastroUsuarioWeb/projects/1)
