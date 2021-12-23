@@ -9,31 +9,80 @@
     <div class="box">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="notification is-danger">
-                {{ messages[0] }}
-            </div>
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
         {% endif %}
         {% endwith %}
-        <form method="POST" action="/login">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
-                </div>
-            </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                    aria-selected="true">Email</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile"
+                    aria-selected="false">CPF</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contato" role="tab"
+                    aria-controls="contact" aria-selected="false">PIS</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <br>
+                <form method="POST" action="/login/1">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="email" name="email" placeholder="Email"
+                                autofocus="">
+                        </div>
+                    </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Your Password">
-                </div>
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="password" name="password" placeholder="Senha">
+                        </div>
+                    </div>
+                    <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                </form>
             </div>
-            <div class="field">
-                <label class="checkbox">
-                    <input type="checkbox">
-                    Remember me
-                </label>
+            <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
+                <br>
+                <form method="POST" action="/login/2">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="number" name="cpf" placeholder="CPF"
+                                autofocus="">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="password" name="password" placeholder="Senha">
+                        </div>
+                    </div>
+                    <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                </form>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
-        </form>
+            <div class="tab-pane fade" id="contato" role="tabpanel" aria-labelledby="contact-tab">
+                <br>
+                <form method="POST" action="/login/3">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="number" name="pis" placeholder="PIS"
+                                autofocus="">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="password" name="password" placeholder="Senha">
+                        </div>
+                    </div>
+                    <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

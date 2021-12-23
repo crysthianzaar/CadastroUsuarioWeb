@@ -2,6 +2,110 @@
 
 {% block content %}
 <h1 class="title">
-  Olá, {{ nome }}!
+  Olá, {{ user.nome }}!
 </h1>
+
+<div class="column is-4 is-offset-4">
+  <div class="box">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+      {{ messages[0] }}</a>
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="/profile">
+      <h3> Informações Pessoais: </h3>
+      <br>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Email:</label>
+          <input class="input is-large" type="email" name="email" autofocus="" value="{{user.email}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Nome:</label>
+          <input class="input is-large" type="text" name="nome" autofocus="" value="{{user.nome}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">CPF:</label>
+          <input class="input is-large" type="number" name="cpf" value="{{user.cpf}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">PIS:</label>
+          <input class="input is-large" type="number" name="pis" value="{{user.pis}}" required>
+        </div>
+      </div>
+      <hr>
+
+      <h3> Endereço: </h3>
+      <br>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">País:</label>
+          <input class="input is-large" type="text" name="Pais" value="{{endereco.pais}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Estado:</label>
+          <input class="input is-large" type="text" name="Estado" value="{{endereco.estado}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Municipio:</label>
+          <input class="input is-large" type="text" name="Municipio" value="{{endereco.municipio}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">CEP:</label>
+          <input class="input is-large" type="number" name="CEP" value="{{endereco.cep}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Rua:</label>
+          <input class="input is-large" type="text" name="Rua" value="{{endereco.rua}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Número:</label>
+          <input class="input is-large" type="number" name="Numero" value="{{endereco.numero}}" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Complemento:</label>
+          <input class="input is-large" type="text" name="Complemento" value="{{endereco.complemento}}">
+        </div>
+      </div>
+      <button class="button is-block is-info is-large is-fullwidth">Atualizar Informações</button>
+    </form>
+    <hr>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#exampleModal">
+      Deletar Conta
+    </button>
+
+  </div>
+</div>
 {% endblock %}

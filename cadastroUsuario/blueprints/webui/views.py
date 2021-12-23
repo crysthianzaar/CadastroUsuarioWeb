@@ -14,19 +14,53 @@ def index():
 
 @login_required
 def profile():
-    return render_template('profile.html', nome= current_user.nome)
+    endereco = EnderecoUsuario.query.filter_by(id=current_user.id).first()
+    return render_template('profile.html', user= current_user, endereco = endereco)
+
+@login_required
+def editprofile():
+    try:
+        user = Usuario.query.filter_by(id=current_user.id).first()
+        endereco = EnderecoUsuario.query.filter_by(id=current_user.id).first()
+        
+        user.email = request.form.get('email')
+        user.nome = request.form.get('nome')
+        user.cpf = request.form.get('cpf')
+        user.pis = request.form.get('pis')
+        endereco.pais = request.form.get('Pais')
+        endereco.estado = request.form.get('Estado')
+        endereco.municipio = request.form.get('Municipio')
+        endereco.cep = request.form.get('CEP')
+        endereco.rua = request.form.get('Rua')
+        endereco.numero = request.form.get('Numero')
+        endereco.complemento = request.form.get('Complemento')
+        
+        db.session.commit()
+        flash('Informações alteradas com sucesso!')
+    except:
+        flash('Ops! Houve um erro durante a alteração. Tente novamente ou contate o administrador do sistema.')
+    return render_template('profile.html', user= current_user, endereco = endereco)
 
 
 def login():
     return render_template('login.html')
 
-def login_post():
-    email = request.form.get('email')
+def login_post(type):
+    
     password = request.form.get('password')
+    
+    if type == 1:
+        email = request.form.get('email')
+        user = Usuario.query.filter_by(email=email).first()
+    
+    if type == 2:
+        cpf = request.form.get('cpf')
+        user = Usuario.query.filter_by(cpf=cpf).first()
+    
+    if type == 3:
+        pis = request.form.get('pis')
+        user  = Usuario.query.filter_by(pis=pis).first()
 
-    user = Usuario.query.filter_by(email=email).first()
-    print(user.senha)
-    print("Senha: " + password)
     # verifica se o usuário realmente existe
     # Pega a senha fornecida pelo usuário, gera o hash e compara com a senha em hash do banco de dados
     if not user or not check_password_hash(user.senha, password):
@@ -64,7 +98,17 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
     if not password:
         flash('É necessário inserir uma senha! Caso já tenha uma conta')
         return redirect(url_for('webui.signup'))
-        
+    
+    # Valida Cadastro sem PIS
+    if not pis:
+        flash('É necessário inserir um PIS! Caso já tenha uma conta')
+        return redirect(url_for('webui.signup'))
+    
+    # Valida Cadastro sem CPF
+    if not cpf:
+        flash('É necessário inserir um CPF! Caso já tenha uma conta')
+        return redirect(url_for('webui.signup'))
+       
     # Se um usuário for encontrado, queremos redireciona-lo de volta para a página de Cadastro.
     elif user: 
         flash('Opa! Parece que esse Email já está cadastrado!')
@@ -107,6 +151,14 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
 
 @login_required
 def logout():
+    logout_user()
+    return redirect(url_for('webui.index'))
+
+@login_required
+def delete_user():
+    Usuario.query.filter_by(id=current_user.id).delete()
+    EnderecoUsuario.query.filter_by(id=current_user.id).delete()
+    db.session.commit()
     logout_user()
     return redirect(url_for('webui.index'))
 
