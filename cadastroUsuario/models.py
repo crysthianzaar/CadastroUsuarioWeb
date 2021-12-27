@@ -10,16 +10,35 @@ class Usuario(db.Model, SerializerMixin, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    endereco = db.relationship("EnderecoUsuario", backref="Usuario", uselist=False)
     cpf = db.Column(db.String(11), unique=True, nullable=False)
     pis = db.Column(db.String(11), unique=True, nullable=False)
     senha = db.Column(db.String(512))
+    
+    def __repr__(self):
+        return self.name
+
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
+    
+    @classmethod
+    def get_by_id(cls,id):
+        return cls.query.get_or_404(id)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 class EnderecoUsuario(db.Model, SerializerMixin, UserMixin):
     __tablename__ = 'EnderecoUsuario'
     
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('Usuario.id'), unique=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('Usuario.id'))
+    usuario = db.relationship("Usuario", backref="EnderecoUsuario")
     pais = db.Column(db.String(80), nullable=False)
     estado = db.Column(db.String(80), nullable=False)
     municipio = db.Column(db.String(80), nullable=False)
@@ -27,3 +46,7 @@ class EnderecoUsuario(db.Model, SerializerMixin, UserMixin):
     rua = db.Column(db.String(80), nullable=False)
     numero = db.Column(db.String(15))
     complemento = db.Column(db.String(80))
+    
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()

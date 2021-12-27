@@ -9,6 +9,6 @@
       "DEBUG": true,
       "SQLALCHEMY_DATABASE_URI": "sqlite:///development.db",
       "SQLALCHEMY_TRACK_MODIFICATIONS": false,
-      "SECRET_KEY": "secret"
+      "SECRET_KEY": "Th1s1ss3cr3t"
     }
   }

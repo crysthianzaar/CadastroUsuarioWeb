@@ -1,3 +1,4 @@
+from cadastroUsuario.helpers import ValidateCPF
 from ...extensions.database import db
 from cadastroUsuario.models import Usuario, EnderecoUsuario
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,15 +15,16 @@ def index():
 
 @login_required
 def profile():
-    endereco = EnderecoUsuario.query.filter_by(id=current_user.id).first()
-    return render_template('profile.html', user= current_user, endereco = endereco)
+    user = Usuario.query.filter_by(id=current_user.id).first()
+    endereco = EnderecoUsuario.query.filter_by(usuario_id=current_user.id).first()
+    return render_template('profile.html', user= user, endereco = endereco)
 
 @login_required
 def editprofile():
     try:
         user = Usuario.query.filter_by(id=current_user.id).first()
-        endereco = EnderecoUsuario.query.filter_by(id=current_user.id).first()
-        
+        endereco = EnderecoUsuario.query.filter_by(usuario_id=current_user.id).first()
+        print(endereco)
         user.email = request.form.get('email')
         user.nome = request.form.get('nome')
         user.cpf = request.form.get('cpf')
@@ -39,7 +41,7 @@ def editprofile():
         flash('Informações alteradas com sucesso!')
     except:
         flash('Ops! Houve um erro durante a alteração. Tente novamente ou contate o administrador do sistema.')
-    return render_template('profile.html', user= current_user, endereco = endereco)
+    return render_template('profile.html', user= user, endereco = endereco)
 
 
 def login():
@@ -70,7 +72,6 @@ def login_post(type):
     login_user(user)
     # Se a verificação acima for aprovada, sabemos que o usuário tem as credenciais corretas
     return redirect(url_for('webui.index'))
-
 
 def signup():
     return render_template('signup.html')
@@ -124,10 +125,23 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
         flash('Opa! Parece que já existe um usuário cadastrado com esse PIS!')
         return redirect(url_for('webui.signup'))
     
+    elif ValidateCPF(cpf) is False:
+        flash('Opa! Este CPF é Inválido! Caso já tenha uma conta')
+        return redirect(url_for('webui.signup'))
+    
     # Cria um novo usuário com os dados do formulário. 
     # Gera um hash da senha para que a versão em texto simples não seja salva.
     else:
+        new_user = Usuario(
+            email=email, 
+            nome=nome, 
+            cpf=cpf, 
+            pis = pis,
+            senha=generate_password_hash(password, method='sha256'))
+        
         endereco = EnderecoUsuario(
+            usuario = new_user,
+            usuario_id = new_user.id,
             pais =  pais,
             estado = estado,
             municipio = municipio,
@@ -135,16 +149,9 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
             rua = rua,
             numero = numero,
             complemento = complemento)
-        
-        new_user = Usuario(
-            email=email, 
-            nome=nome, 
-            cpf=cpf, 
-            pis = pis,
-            senha=generate_password_hash(password, method='sha256'),
-            endereco = endereco)
         # Adiciona o novo usuário ao banco de dados
         db.session.add(new_user)
+        db.session.add(endereco)
         db.session.commit()
         
     return redirect(url_for('webui.login'))

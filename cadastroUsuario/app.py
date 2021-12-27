@@ -8,5 +8,6 @@ def create_app():
     commands.init_app(app)              # Comandos de Sistema
     database.init_app(app)              # Configuração do Banco de Dados
     session_management.init_app(app)    # Gerenciamento de Sessão de Usuário
+    restapi.init_app(app)               # API REST para gerenciamento de usuários
     webui.init_app(app)                 # Templates, Login e Cadastro de Usuário
     return app
