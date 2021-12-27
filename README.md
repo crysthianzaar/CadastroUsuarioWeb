@@ -11,12 +11,21 @@
 página apresentar botão de remoção do usuário que o desloga em
 seguida.
 
-### Nível 1 Bonus - Backend/Fullstack
+### Nível 1 Bônus - Backend/Fullstack
 
 - - [x] Use variáveis de ambiente
 - - [ ] Use Docker
 - - [ ] Suba a aplicação(back e front) no heroku ou similar.
 
+### Nível 2 - Backend/Fullstack
+- - [x] Criar API REST completa para manipulação dos usuários
+- - [x] Realizar autenticação via token JWT
+
+### Nível 2 Bônus - Backend/Fullstack
+- - [ ] Torne o front adaptado para web e mobile.
+- - [ ] Escreva um arquivo de docker-compose contendo a configuração dos 3
+serviços(back, banco, front). Torne o banco de dados acessível apenas para o
+back.
 ---
 
 Veja todas as issues e kanban do projeto [Aqui](https://github.com/crysthianzaar/CadastroUsuarioWeb/projects/1)
