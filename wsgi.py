@@ -1,4 +1,4 @@
-from cadastroUsuario.app import app
+from cadastroUsuario.app import create_app
  
 if __name__ == "__main__":
-        app.run()
+        create_app()
