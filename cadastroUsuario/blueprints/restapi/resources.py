@@ -85,7 +85,14 @@ class User(Resource):
         cpf = data.get('cpf')
         pis = data.get('pis')
         password = data.get('senha')
-        
+        pais= data.get('pais')
+        estado = data.get('estado')
+        municipio= data.get('municipio')
+        cep= data.get('cep')
+        rua = data.get('rua')
+        numero = data.get('numero')
+        complemento= data.get('complemento')
+    
         user = Usuario.query.filter_by(email=email).first()  # Se retornar um usuário, o e-mail já existe no banco de dados
         usercpf = Usuario.query.filter_by(cpf=cpf).first()   # Se retornar um CPF, significa que já existe um banco de dados
         userpis = Usuario.query.filter_by(pis=pis).first()   # Se retornar um PIS, significa que já existe um banco de dados
@@ -114,19 +121,35 @@ class User(Resource):
             return make_response('Opa! Este CPF é Inválido!')
         
         senha = generate_password_hash(password, method='sha256')
-
-        new_recipe = Usuario(
-            nome= data.get('nome'),
-            email = email,
-            cpf = cpf,
-            pis = pis,
-            senha = senha
-        )
         
-        new_recipe.save()
-        serializer = UsuariorSchema()
-        data = serializer.dump(new_recipe)
-        return make_response(jsonify(data), 201)
+        try:
+            new_user = Usuario(
+                nome= data.get('nome'),
+                email = email,
+                cpf = cpf,
+                pis = pis,
+                senha = senha
+            )
+            
+            endereco = EnderecoUsuario(
+                usuario = new_user,
+                usuario_id = new_user.id,
+                pais =  pais,
+                estado = estado,
+                municipio = municipio,
+                cep = cep,
+                rua = rua,
+                numero = numero,
+                complemento = complemento)
+            
+            
+            new_user.save()
+            endereco.save()
+            serializer = UsuariorSchema()
+            data = serializer.dump(new_user)
+            return make_response(jsonify(data), 201)
+        except:
+            return make_response("Ops! Houve um erro na tentativa de cadastro!")
 
 # GET Usuário pelo ID    
 class UserById(Resource):
