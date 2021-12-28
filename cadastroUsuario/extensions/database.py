@@ -1,11 +1,11 @@
+import flask_marshmallow
 from  flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sqlalchemy import event
-from sqlalchemy.engine import Engine
 from flask_marshmallow import Marshmallow, fields
 
+
 db = SQLAlchemy()
-ma = Marshmallow()
+ma = flask_marshmallow.Marshmallow()
 migrate = Migrate()
 
 def init_app(app):

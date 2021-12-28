@@ -4,6 +4,7 @@ from flask import  jsonify, request
 from flask.helpers import make_response
 from flask_restful import Resource
 from marshmallow import fields
+from collections import OrderedDict
 from werkzeug.security import check_password_hash, generate_password_hash
 from cadastroUsuario.extensions.database import ma, db
 from cadastroUsuario.helpers import ValidateCPF
@@ -11,35 +12,21 @@ from cadastroUsuario.models import Usuario, EnderecoUsuario
 from dynaconf import settings
 
 # Definição de Schema da API : Padrão -> Lib Flask-Marshmallow
-class UsuariorSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Usuario  
-        id=fields.String()
-        nome=fields.String()
-        email= fields.String()
-        cpf=fields.String()
-        pis=fields.String()
-        senha=fields.String()
-
-
 class EnderecoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = EnderecoUsuario
+        ordered=True
+        
+class UsuariorSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Usuario
+        fields = ("id", "nome", "email", "cpf","pis","endereco")
         include_fk = True
-    
-        id=fields.String()
-        usuario_id=fields.String()
-        usuario= fields.Nested("UsuarioSchema")
-        pais=fields.String()
-        estado=fields.String()
-        municipio=fields.String()
-        cep=fields.String()
-        rua=fields.String()
-        numero=fields.String()
-        complemento=fields.String()
+        ordered = True
+ 
+    endereco = ma.Nested(EnderecoSchema)
 
-
-users_schema = UsuariorSchema(many=True)
+ 
 
 # Auth JWT -> Verificação By User
 def user_by_username(email):
@@ -158,6 +145,7 @@ class UserById(Resource):
         #db.session.query(EnderecoUsuario).get(usuario_id)
         user=Usuario.get_by_id(id)
         serializer=UsuariorSchema()
+        
         data=serializer.dump(user)
         return make_response(jsonify(data), 200)
 

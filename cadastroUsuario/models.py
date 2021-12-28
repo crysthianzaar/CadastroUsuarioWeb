@@ -13,9 +13,8 @@ class Usuario(db.Model, SerializerMixin, UserMixin):
     cpf = db.Column(db.String(11), unique=True, nullable=False)
     pis = db.Column(db.String(11), unique=True, nullable=False)
     senha = db.Column(db.String(512))
-    
-    def __repr__(self):
-        return self.name
+    endereco = db.relationship("EnderecoUsuario", backref="Usuario")
+    endereco_id = db.Column(db.Integer, db.ForeignKey('EnderecoUsuario.id'))    
 
     @classmethod
     def get_all(cls):
@@ -37,8 +36,6 @@ class EnderecoUsuario(db.Model, SerializerMixin, UserMixin):
     __tablename__ = 'EnderecoUsuario'
     
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('Usuario.id'))
-    usuario = db.relationship("Usuario", backref="EnderecoUsuario")
     pais = db.Column(db.String(80), nullable=False)
     estado = db.Column(db.String(80), nullable=False)
     municipio = db.Column(db.String(80), nullable=False)

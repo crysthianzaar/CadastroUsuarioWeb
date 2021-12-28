@@ -14,5 +14,5 @@ def init_app(app):
     api.add_resource(UserById, "/user/<int:id>", methods=['GET'])       # Obtem usuário pelo Id
     api.add_resource(UserUpdate, "/user/<int:id>", methods=['PUT'])     # Altera dados de um usuário pelo Id
     api.add_resource(UserDelete, "/user/<int:id>", methods=['DELETE'])  # Deleta um usuário pelo Id
-    api.add_resource(AllEnderecos, "/enderecos/", methods=['GET'])        # GET todos os endereços cadastrados
+    api.add_resource(AllEnderecos, "/enderecos/", methods=['GET'])      # GET todos os endereços cadastrados
     app.register_blueprint(bp)

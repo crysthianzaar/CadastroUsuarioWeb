@@ -16,14 +16,15 @@ def index():
 @login_required
 def profile():
     user = Usuario.query.filter_by(id=current_user.id).first()
-    endereco = EnderecoUsuario.query.filter_by(usuario_id=current_user.id).first()
+    endereco = EnderecoUsuario.query.filter(user.endereco_id == EnderecoUsuario.id).first()
+    
     return render_template('profile.html', user= user, endereco = endereco)
 
 @login_required
 def editprofile():
     try:
         user = Usuario.query.filter_by(id=current_user.id).first()
-        endereco = EnderecoUsuario.query.filter_by(usuario_id=current_user.id).first()
+        endereco = EnderecoUsuario.query.filter(user.endereco_id == EnderecoUsuario.id).first()
         print(endereco)
         user.email = request.form.get('email')
         user.nome = request.form.get('nome')
@@ -132,16 +133,8 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
     # Cria um novo usuário com os dados do formulário. 
     # Gera um hash da senha para que a versão em texto simples não seja salva.
     else:
-        new_user = Usuario(
-            email=email, 
-            nome=nome, 
-            cpf=cpf, 
-            pis = pis,
-            senha=generate_password_hash(password, method='sha256'))
-        
         endereco = EnderecoUsuario(
-            usuario = new_user,
-            usuario_id = new_user.id,
+            
             pais =  pais,
             estado = estado,
             municipio = municipio,
@@ -149,6 +142,15 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
             rua = rua,
             numero = numero,
             complemento = complemento)
+        
+        new_user = Usuario(
+            email=email,
+            endereco = endereco,
+            endereco_id= endereco.id,
+            nome=nome, 
+            cpf=cpf, 
+            pis = pis,
+            senha=generate_password_hash(password, method='sha256'))
         # Adiciona o novo usuário ao banco de dados
         db.session.add(new_user)
         db.session.add(endereco)
