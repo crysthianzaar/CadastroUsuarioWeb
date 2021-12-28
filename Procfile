@@ -1,1 +1,1 @@
-web: gunicorn wsgi:cadastroUsuario/app.py
+web: gunicorn cadastroUsuario.app
