@@ -1,4 +1,4 @@
-from cadastroUsuario.helpers import ValidateCPF
+from cadastroUsuario.helpers import ValidateCPF, ValidatePIS
 from ...extensions.database import db
 from cadastroUsuario.models import Usuario, EnderecoUsuario
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,7 +25,6 @@ def editprofile():
     try:
         user = Usuario.query.filter_by(id=current_user.id).first()
         endereco = EnderecoUsuario.query.filter(user.endereco_id == EnderecoUsuario.id).first()
-        print(endereco)
         user.email = request.form.get('email')
         user.nome = request.form.get('nome')
         user.cpf = request.form.get('cpf')
@@ -130,6 +129,11 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
         flash('Opa! Este CPF é Inválido! Caso já tenha uma conta')
         return redirect(url_for('webui.signup'))
     
+    elif ValidatePIS(pis) is False:
+        flash('Opa! Este PIS é Inválido! Caso já tenha uma conta')
+        return redirect(url_for('webui.signup'))
+    
+    
     # Cria um novo usuário com os dados do formulário. 
     # Gera um hash da senha para que a versão em texto simples não seja salva.
     else:
@@ -165,9 +169,8 @@ def logout():
 
 @login_required
 def delete_user():
-    Usuario.query.filter_by(id=current_user.id).delete()
-    EnderecoUsuario.query.filter_by(id=current_user.id).delete()
+    Usuario.query.filter_by(id=current_user.id).delete()                     
+    EnderecoUsuario.query.filter_by(id=current_user.endereco_id).delete()
     db.session.commit()
     logout_user()
     return redirect(url_for('webui.index'))
-
