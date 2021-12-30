@@ -83,3 +83,10 @@ Exemplo de JSON para POST / PUT:
     "complemento" : "Perto da praça"
 } 
 ```
+
+
+---
+
+Para executar os testes:
+
+`$ pytest` 
