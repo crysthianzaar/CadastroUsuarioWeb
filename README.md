@@ -15,6 +15,7 @@ visitante"
 - Botão que leva para a página de edição dos dados cadastrais. Nessa
 página apresenta um botão de remoção do usuário que o desloga em
 seguida.
+- Alteração de senha
 - Variáveis de ambiente
 - API REST completa para manipulação dos usuários
 - Autenticação da API via token JWT
@@ -50,7 +51,17 @@ Endpoint  | Método | Descrição
 /user/id | DELETE | Deleta um usuário pelo Id
 /enderecos/ |GET | Obtem todos os endereços cadastrados
   
+Utilize o Postman para facilitar testes e entender documentação:
   
-   [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1ba2ece2b373d108bb7f?action=collection%2Fimport)
+  [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/ed7f32afbde1caef0698?action=collection%2Fimport)
  </div>
  
+ - Passos para usar a API:
+
+`$ 1: Ter uma conta ativa na aplicação` 
+
+`$ 2: Utilizar o método POST - /authlogin/ para obter o token JWT (Passar email e senha na body da requisição)`
+
+`$ 3: Passe o campo "token" no params de todos os outros endpoints para usar a API` 
+
+
