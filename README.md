@@ -64,4 +64,22 @@ Utilize o Postman para facilitar testes e entender documentação:
 
 `$ 3: Passe o campo "token" no params de todos os outros endpoints para usar a API` 
 
+Exemplo de JSON para POST / PUT:
 
+
+```json
+{
+    "nome": "Crysthian Z",
+    "email": "testfdedfzfanote@gmail.com",
+    "cpf": "79107gff561008" ,
+    "pis": "147f95fg1946" ,
+    "senha": "testhge",
+    "pais" : "pais",
+    "estado" : "estado",
+    "municipio" : "municipio",
+    "cep" : "cep",
+    "rua" : "rua",
+    "numero": "numero",
+    "complemento" : "complemento"
+} 
+```
