@@ -1,11 +1,13 @@
 from flask import Blueprint
-from .views import index, profile, editprofile, login, signup, logout, signup_post, login_post, delete_user
+from .views import index, profile, editprofile, login, signup, logout, signup_post, login_post, delete_user,alteraSenha, updateSenha
 
 bp = Blueprint("webui", __name__, template_folder="templates")
 
 bp.add_url_rule("/", view_func=index)
 bp.add_url_rule("/login", view_func=login)
 bp.add_url_rule('/login/<int:type>', view_func=login_post, methods=['POST'])
+bp.add_url_rule("/alteraSenha", view_func=alteraSenha)
+bp.add_url_rule("/alteraSenha", view_func=updateSenha, methods=['POST'])
 bp.add_url_rule("/signup", view_func=signup)
 bp.add_url_rule("/signup", view_func=signup_post, methods=['POST'])
 bp.add_url_rule("/logout", view_func=logout) 

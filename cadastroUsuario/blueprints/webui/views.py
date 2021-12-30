@@ -4,6 +4,8 @@ from cadastroUsuario.models import Usuario, EnderecoUsuario
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, current_user, logout_user
+from datetime import datetime
+
 
 def index():
     nome = ""
@@ -17,7 +19,6 @@ def index():
 def profile():
     user = Usuario.query.filter_by(id=current_user.id).first()
     endereco = EnderecoUsuario.query.filter(user.endereco_id == EnderecoUsuario.id).first()
-    
     return render_template('profile.html', user= user, endereco = endereco)
 
 @login_required
@@ -29,6 +30,7 @@ def editprofile():
         user.nome = request.form.get('nome')
         user.cpf = request.form.get('cpf')
         user.pis = request.form.get('pis')
+        user.data_update = datetime.now().strftime("%d/%m/%Y %H:%M")
         endereco.pais = request.form.get('Pais')
         endereco.estado = request.form.get('Estado')
         endereco.municipio = request.form.get('Municipio')
@@ -37,12 +39,13 @@ def editprofile():
         endereco.numero = request.form.get('Numero')
         endereco.complemento = request.form.get('Complemento')
         
+        
+        
         db.session.commit()
         flash('Informações alteradas com sucesso!')
     except:
         flash('Ops! Houve um erro durante a alteração. Tente novamente ou contate o administrador do sistema.')
     return render_template('profile.html', user= user, endereco = endereco)
-
 
 def login():
     return render_template('login.html')
@@ -154,6 +157,7 @@ def signup_post(): # Função chamada ao clicar no botão "Cadastrar"
             nome=nome, 
             cpf=cpf, 
             pis = pis,
+            data_update = datetime.now().strftime("%d/%m/%Y %H:%M"),
             senha=generate_password_hash(password, method='sha256'))
         # Adiciona o novo usuário ao banco de dados
         db.session.add(new_user)
@@ -174,3 +178,28 @@ def delete_user():
     db.session.commit()
     logout_user()
     return redirect(url_for('webui.index'))
+
+@login_required
+def alteraSenha():
+    user = Usuario.query.filter_by(id=current_user.id).first()
+    return render_template('alteraSenha.html', user= user)
+
+@login_required
+def updateSenha():
+    try:
+        user = Usuario.query.filter_by(id=current_user.id).first()
+        
+        senhaAtual = request.form.get('senhaAtual')
+        novaSenha = request.form.get('senhaNova')
+        novaSenhaVerify = request.form.get('senhaNovaVerify')
+
+        if check_password_hash(user.senha, senhaAtual):
+            if (novaSenha == novaSenhaVerify) and (novaSenha != senhaAtual):
+                senhaHash = generate_password_hash(novaSenha, method='sha256')
+                user.senha = senhaHash
+                db.session.commit()
+                flash('Senha alterada com sucesso!')
+        flash('Ops! Houve um erro durante a alteração. Tente novamente ou contate o administrador do sistema.')
+    except:
+        flash('Ops! Houve um erro durante a alteração. Tente novamente ou contate o administrador do sistema.')
+    return render_template('alteraSenha.html', user= user)

@@ -1,3 +1,4 @@
+from datetime import datetime
 import jwt
 from functools import wraps
 from flask import  jsonify, request
@@ -115,7 +116,8 @@ class User(Resource):
                 email = email,
                 cpf = cpf,
                 pis = pis,
-                senha = senha
+                senha = senha,
+                data_update = datetime.now().strftime("%d/%m/%Y %H:%M")
             )
             
             endereco = EnderecoUsuario(
@@ -154,11 +156,21 @@ class UserUpdate(Resource):
     decorators = [token_required]
     def put(self,*args,id):
         user_to_update=Usuario.get_by_id(id)
+        endereco = EnderecoUsuario.query.filter(user_to_update.endereco_id == EnderecoUsuario.id).first()
         data=request.get_json()
         user_to_update.nome=data.get('nome')
         user_to_update.email=data.get('email')
         user_to_update.cpf=data.get('cpf')
         user_to_update.pis=data.get('pis')
+        user_to_update.data_update = datetime.now().strftime("%d/%m/%Y %H:%M")
+        endereco.pais = data.get('pais')
+        endereco.estado = data.get('estado')
+        endereco.municipio = data.get('municipio')
+        endereco.cep = data.get('cep')
+        endereco.rua = data.get('rua')
+        endereco.numero = data.get('numero')
+        endereco.complemento = data.get('complemento')
+        
         db.session.commit()
         serializer=UsuariorSchema()
         recipe_data=serializer.dump(user_to_update)

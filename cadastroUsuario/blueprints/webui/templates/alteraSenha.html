@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Olá, {{ user.nome }}!
+</h1>
+
+<div class="column is-4 is-offset-4">
+  <div class="box">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+      {{ messages[0] }}</a>
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="/alteraSenha">
+      <h3> Informações Pessoais: </h3>
+      <br>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Digite a sua senha atual:</label>
+          <input class="input is-large" type="password" name="senhaAtual" autofocus="" required>
+        </div>
+        <hr>
+        <div class="control">
+          <label class="label">Digite a nova senha:</label>
+          <input class="input is-large" type="password" name="senhaNova" autofocus="" required>
+        </div>
+
+        <div class="control">
+          <label class="label">Confirme a nova senha:</label>
+          <input class="input is-large" type="password" name="senhaNovaVerify" autofocus="" required>
+        </div>
+
+
+      </div>
+      </div>
+      <button class="button is-block is-info is-large is-fullwidth">Realizar Alteração</button>
+    </form>
+    <hr>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#exampleModal">
+      Deletar Conta
+    </button>
+    
+  </div>
+</div>
+{% endblock %}
