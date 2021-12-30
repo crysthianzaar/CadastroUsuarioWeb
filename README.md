@@ -70,7 +70,7 @@ Exemplo de JSON para POST / PUT:
 ```json
 {
     "nome": "Crysthian Z",
-    "email": "testfdedfzfanote@gmail.com",
+    "email": "teste@gmail.com",
     "cpf": "76420480094" ,
     "pis": "06379098643" ,
     "senha": "teste",
