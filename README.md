@@ -71,15 +71,15 @@ Exemplo de JSON para POST / PUT:
 {
     "nome": "Crysthian Z",
     "email": "testfdedfzfanote@gmail.com",
-    "cpf": "79107gff561008" ,
-    "pis": "147f95fg1946" ,
-    "senha": "testhge",
-    "pais" : "pais",
-    "estado" : "estado",
-    "municipio" : "municipio",
-    "cep" : "cep",
-    "rua" : "rua",
-    "numero": "numero",
-    "complemento" : "complemento"
+    "cpf": "76420480094" ,
+    "pis": "06379098643" ,
+    "senha": "teste",
+    "pais" : "Brasil",
+    "estado" : "ES",
+    "municipio" : "Vitória",
+    "cep" : "29045740",
+    "rua" : "Praça Júlio Teixeira da Cruz",
+    "numero": "95",
+    "complemento" : "Perto da praça"
 } 
 ```
