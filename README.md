@@ -90,3 +90,5 @@ Exemplo de JSON para POST / PUT:
 Para executar os testes:
 
 `$ pytest` 
+
+`$ pytest cadastroUsuario/tests --cov `
