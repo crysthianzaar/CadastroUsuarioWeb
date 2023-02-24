@@ -1,4 +1,4 @@
-<H1 align=center> Cadastro de Usuário WEB - Flask + Fask Templates </H1>
+<H1 align=center> Cadastro de Usuário WEB - Flask + Flask Templates </H1>
 
 <H3 align=center> Veja todas as issues e kanban do projeto em: https://github.com/crysthianzaar/CadastroUsuarioWeb/projects/1 </H3>
 
